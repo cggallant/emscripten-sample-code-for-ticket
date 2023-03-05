@@ -1,0 +1,1 @@
+docker run --rm -v ${pwd}:/src emscripten/emsdk:3.1.32 emcc core.cpp --js-library mergeinto.js -s MAIN_MODULE=2 -s MODULARIZE=1 -s "EXPORTED_FUNCTIONS=['_strlen']" -s "EXPORTED_RUNTIME_METHODS=['ccall','UTF8ToString']" -o core.js

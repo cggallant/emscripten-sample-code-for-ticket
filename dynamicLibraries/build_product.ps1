@@ -1,0 +1,1 @@
+docker run --rm -v ${pwd}:/src emscripten/emsdk:3.1.32 emcc product.cpp -s SIDE_MODULE=2 -O1 -o product.wasm
