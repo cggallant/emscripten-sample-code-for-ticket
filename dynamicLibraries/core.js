@@ -2216,10 +2216,6 @@ var ASM_CONSTS = {
       }
     }
 
-  function _UpdateHostAboutError(errorMessagePointer) {
-      console.log(Module.UTF8ToString(errorMessagePointer));
-    }
-
 
   var ___memory_base = new WebAssembly.Global({'value': 'i32', 'mutable': false}, 1024);
 
@@ -4811,7 +4807,6 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var wasmImports = {
-  "UpdateHostAboutError": _UpdateHostAboutError,
   "__heap_base": ___heap_base,
   "__indirect_function_table": wasmTable,
   "__memory_base": ___memory_base,
@@ -4877,7 +4872,6 @@ var _emscripten_stack_get_current = function() {
 // include: postamble.js
 // === Auto-generated postamble setup entry stuff ===
 
-Module["UTF8ToString"] = UTF8ToString;
 Module["ccall"] = ccall;
 var missingLibrarySymbols = [
   'stringToNewUTF8',
@@ -5029,6 +5023,7 @@ missingLibrarySymbols.forEach(missingLibrarySymbol)
 var unexportedSymbols = [
   'run',
   'UTF8ArrayToString',
+  'UTF8ToString',
   'stringToUTF8Array',
   'stringToUTF8',
   'lengthBytesUTF8',
