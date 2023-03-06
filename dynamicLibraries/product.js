@@ -27,7 +27,7 @@ Module['ready'] = new Promise(function(resolve, reject) {
   readyPromiseResolve = resolve;
   readyPromiseReject = reject;
 });
-["_strlen","___wasm_apply_data_relocs","_ValidateValueProvided","_fflush","onRuntimeInitialized"].forEach((prop) => {
+["_main","___wasm_apply_data_relocs","_ValidateName","_fflush","onRuntimeInitialized"].forEach((prop) => {
   if (!Object.getOwnPropertyDescriptor(Module['ready'], prop)) {
     Object.defineProperty(Module['ready'], prop, {
       get: () => abort('You are getting ' + prop + ' on the Promise object, instead of the instance. Use .then() to get called back with the instance, see the MODULARIZE docs in src/settings.js'),
@@ -958,7 +958,7 @@ function createExportWrapper(name, fixedasm) {
 // include: runtime_exceptions.js
 // end include: runtime_exceptions.js
 var wasmBinaryFile;
-  wasmBinaryFile = 'core.wasm';
+  wasmBinaryFile = 'product.wasm';
   if (!isDataURI(wasmBinaryFile)) {
     wasmBinaryFile = locateFile(wasmBinaryFile);
   }
@@ -2215,6 +2215,13 @@ var ASM_CONSTS = {
         err(text);
       }
     }
+
+  function _ValidateValueProvided(
+  ) {
+  if (!wasmImports['ValidateValueProvided'] || wasmImports['ValidateValueProvided'].stub) abort("external symbol 'ValidateValueProvided' is missing. perhaps a side module was not linked in? if this function was expected to arrive from a system library, try to build the MAIN_MODULE with EMCC_FORCE_STDLIBS=1 in the environment");
+  return wasmImports['ValidateValueProvided'].apply(null, arguments);
+  }
+  _ValidateValueProvided.stub = true;
 
 
   var ___memory_base = new WebAssembly.Global({'value': 'i32', 'mutable': false}, 1024);
@@ -4807,6 +4814,7 @@ function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var wasmImports = {
+  "ValidateValueProvided": _ValidateValueProvided,
   "__heap_base": ___heap_base,
   "__indirect_function_table": wasmTable,
   "__memory_base": ___memory_base,
@@ -4823,13 +4831,11 @@ var ___wasm_call_ctors = createExportWrapper("__wasm_call_ctors");
 /** @type {function(...*):?} */
 var ___wasm_apply_data_relocs = Module["___wasm_apply_data_relocs"] = createExportWrapper("__wasm_apply_data_relocs");
 /** @type {function(...*):?} */
-var _ValidateValueProvided = Module["_ValidateValueProvided"] = createExportWrapper("ValidateValueProvided");
+var _ValidateName = Module["_ValidateName"] = createExportWrapper("ValidateName");
 /** @type {function(...*):?} */
 var ___errno_location = createExportWrapper("__errno_location");
 /** @type {function(...*):?} */
 var _fflush = Module["_fflush"] = createExportWrapper("fflush");
-/** @type {function(...*):?} */
-var _strlen = Module["_strlen"] = createExportWrapper("strlen");
 /** @type {function(...*):?} */
 var _malloc = createExportWrapper("malloc");
 /** @type {function(...*):?} */

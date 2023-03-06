@@ -3,7 +3,7 @@ const MAXIMUM_NAME_LENGTH = 10;
 let productModule = null;
 
 function init(){
-    Module({ dynamicLibraries: ['product.wasm'] }).then((module) => {
+    Module({ dynamicLibraries: ['core.wasm'] }).then((module) => {
         productModule = module;
     });
 }
